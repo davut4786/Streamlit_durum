@@ -11,7 +11,7 @@ with open(model_path, "rb") as file:
 st.title("Hastalık Durumu Tahmin Uygulaması")
 
 # Input fields for user data
-tur = st.radio("Tür", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("1 (seçili)" if x == 1 else "0 (seçili)"))
+tur = st.radio("Tür", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Köpek" if x == 1 else "Kedi"))
 GRAN = st.number_input("GRAN", value=None, format="%.2f")
 GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f")
 LYM = st.number_input("LYM", value=None, format="%.2f")
