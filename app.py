@@ -13,13 +13,32 @@ st.title("Hastalık Durumu Tahmin Uygulaması")
 # Function to clear all inputs
 def clear_inputs():
     # Reset all session state values for input fields
-    for key in [
+    keys = [
         "tur", "GRAN", "GRAN_A", "LYM", "LYM_A", "MON",
         "HCT", "MCH", "MCHC", "MCV", "RDW", "WBC",
-        "inkordinasyon", "ishal", "istahsizlik", "kusma", "solunum_guclugu"
-    ]:
+        "inkordinasyon", "ishal", "istahsızlık", "kusma", "solunum_guclugu"
+    ]
+    for key in keys:
         if key in st.session_state:
             del st.session_state[key]  # Remove the key from session state
+    # Reinitialize the inputs to their default values
+    st.session_state["tur"] = None
+    st.session_state["GRAN"] = None
+    st.session_state["GRAN_A"] = None
+    st.session_state["LYM"] = None
+    st.session_state["LYM_A"] = None
+    st.session_state["MON"] = None
+    st.session_state["HCT"] = None
+    st.session_state["MCH"] = None
+    st.session_state["MCHC"] = None
+    st.session_state["MCV"] = None
+    st.session_state["RDW"] = None
+    st.session_state["WBC"] = None
+    st.session_state["inkordinasyon"] = None
+    st.session_state["ishal"] = None
+    st.session_state["istahsızlık"] = None
+    st.session_state["kusma"] = None
+    st.session_state["solunum_guclugu"] = None
 
 # Input fields for user data
 tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key='tur')
@@ -51,7 +70,7 @@ if st.button("Tahmin Et"):
     }
     categorical_inputs = {
         "Tür": tur, "İnkordinasyon": inkordinasyon, "İshal": ishal,
-        "İştahsızlık": istahsizlik, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
+        "İştahsızlık": istahsızlık, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
     }
 
     # Check for missing numeric values
@@ -67,7 +86,7 @@ if st.button("Tahmin Et"):
             st.warning(f"Lütfen {', '.join(missing_categorical_values)} seçeneklerini seçiniz.")
     else:
         # Prepare data for model prediction
-        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsizlik, kusma, solunum_guclugu]]
+        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsızlık, kusma, solunum_guclugu]]
         prediction = model.predict(data)[0]
 
         # Display the prediction result
