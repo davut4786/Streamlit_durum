@@ -12,11 +12,26 @@ st.title("Hastalık Durumu Tahmin Uygulaması")
 
 # Function to clear all inputs
 def clear_inputs():
-    for key in st.session_state.keys():
-        st.session_state[key] = None
+    st.session_state["tur"] = 0  # 'Kedi' olarak ayarlanacak
+    st.session_state["GRAN"] = None
+    st.session_state["GRAN_A"] = None
+    st.session_state["LYM"] = None
+    st.session_state["LYM_A"] = None
+    st.session_state["MON"] = None
+    st.session_state["HCT"] = None
+    st.session_state["MCH"] = None
+    st.session_state["MCHC"] = None
+    st.session_state["MCV"] = None
+    st.session_state["RDW"] = None
+    st.session_state["WBC"] = None
+    st.session_state["inkordinasyon"] = None
+    st.session_state["ishal"] = None
+    st.session_state["istahsizlik"] = None
+    st.session_state["kusma"] = None
+    st.session_state["solunum_guclugu"] = None
 
 # Input fields for user data
-tur = st.radio("Tür", options=[1, 0], index=0 if 'tur' not in st.session_state else st.session_state['tur'], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key='tur')
+tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key='tur')
 GRAN = st.number_input("GRAN", value=None, format="%.2f", key='GRAN')
 GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f", key='GRAN_A')
 LYM = st.number_input("LYM", value=None, format="%.2f", key='LYM')
