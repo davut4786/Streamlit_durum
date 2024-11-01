@@ -32,17 +32,17 @@ def reset_inputs():
 
 # Input fields for user data
 tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key="tur")
-GRAN = st.number_input("GRAN", value=None, format="%.2f", key="GRAN")
-GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f", key="GRAN_A")
-LYM = st.number_input("LYM", value=None, format="%.2f", key="LYM")
-LYM_A = st.number_input("LYM_A", value=None, format="%.2f", key="LYM_A")
-MON = st.number_input("MON", value=None, format="%.2f", key="MON")
-HCT = st.number_input("HCT", value=None, format="%.2f", key="HCT")
-MCH = st.number_input("MCH", value=None, format="%.2f", key="MCH")
-MCHC = st.number_input("MCHC", value=None, format="%.2f", key="MCHC")
-MCV = st.number_input("MCV", value=None, format="%.2f", key="MCV")
-RDW = st.number_input("RDW", value=None, format="%.2f", key="RDW")
-WBC = st.number_input("WBC", value=None, format="%.2f", key="WBC")
+GRAN = st.number_input("GRAN", value=st.session_state.get("GRAN", None), format="%.2f", key="GRAN")
+GRAN_A = st.number_input("GRAN_A", value=st.session_state.get("GRAN_A", None), format="%.2f", key="GRAN_A")
+LYM = st.number_input("LYM", value=st.session_state.get("LYM", None), format="%.2f", key="LYM")
+LYM_A = st.number_input("LYM_A", value=st.session_state.get("LYM_A", None), format="%.2f", key="LYM_A")
+MON = st.number_input("MON", value=st.session_state.get("MON", None), format="%.2f", key="MON")
+HCT = st.number_input("HCT", value=st.session_state.get("HCT", None), format="%.2f", key="HCT")
+MCH = st.number_input("MCH", value=st.session_state.get("MCH", None), format="%.2f", key="MCH")
+MCHC = st.number_input("MCHC", value=st.session_state.get("MCHC", None), format="%.2f", key="MCHC")
+MCV = st.number_input("MCV", value=st.session_state.get("MCV", None), format="%.2f", key="MCV")
+RDW = st.number_input("RDW", value=st.session_state.get("RDW", None), format="%.2f", key="RDW")
+WBC = st.number_input("WBC", value=st.session_state.get("WBC", None), format="%.2f", key="WBC")
 
 # Radio button inputs with 'None' as default (no selection)
 inkordinasyon = st.radio("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Evet" if x == 1 else "Hayır" if x == 0 else "Seçiniz", key="inkordinasyon")
@@ -88,3 +88,4 @@ with col1:
 with col2:
     if st.button("Temizle"):
         reset_inputs()
+
