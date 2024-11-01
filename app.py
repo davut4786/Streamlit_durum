@@ -1,4 +1,4 @@
-import streamlit as st
+mport streamlit as st
 import pickle
 import pandas as pd
 
@@ -10,56 +10,26 @@ with open(model_path, "rb") as file:
 # Streamlit title
 st.title("Hastalık Durumu Tahmin Uygulaması")
 
-# Function to clear all inputs
-def clear_inputs():
-    # Reset all session state values for input fields
-    keys = [
-        "tur", "GRAN", "GRAN_A", "LYM", "LYM_A", "MON",
-        "HCT", "MCH", "MCHC", "MCV", "RDW", "WBC",
-        "inkordinasyon", "ishal", "istahsızlık", "kusma", "solunum_guclugu"
-    ]
-    for key in keys:
-        if key in st.session_state:
-            del st.session_state[key]  # Remove the key from session state
-    # Reinitialize the inputs to their default values
-    st.session_state["tur"] = None
-    st.session_state["GRAN"] = None
-    st.session_state["GRAN_A"] = None
-    st.session_state["LYM"] = None
-    st.session_state["LYM_A"] = None
-    st.session_state["MON"] = None
-    st.session_state["HCT"] = None
-    st.session_state["MCH"] = None
-    st.session_state["MCHC"] = None
-    st.session_state["MCV"] = None
-    st.session_state["RDW"] = None
-    st.session_state["WBC"] = None
-    st.session_state["inkordinasyon"] = None
-    st.session_state["ishal"] = None
-    st.session_state["istahsızlık"] = None
-    st.session_state["kusma"] = None
-    st.session_state["solunum_guclugu"] = None
-
 # Input fields for user data
-tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key='tur')
-GRAN = st.number_input("GRAN", value=None, format="%.2f", key='GRAN')
-GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f", key='GRAN_A')
-LYM = st.number_input("LYM", value=None, format="%.2f", key='LYM')
-LYM_A = st.number_input("LYM_A", value=None, format="%.2f", key='LYM_A')
-MON = st.number_input("MON", value=None, format="%.2f", key='MON')
-HCT = st.number_input("HCT", value=None, format="%.2f", key='HCT')
-MCH = st.number_input("MCH", value=None, format="%.2f", key='MCH')
-MCHC = st.number_input("MCHC", value=None, format="%.2f", key='MCHC')
-MCV = st.number_input("MCV", value=None, format="%.2f", key='MCV')
-RDW = st.number_input("RDW", value=None, format="%.2f", key='RDW')
-WBC = st.number_input("WBC", value=None, format="%.2f", key='WBC')
+tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
+GRAN = st.number_input("GRAN", value=None, format="%.2f")
+GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f")
+LYM = st.number_input("LYM", value=None, format="%.2f")
+LYM_A = st.number_input("LYM_A", value=None, format="%.2f")
+MON = st.number_input("MON", value=None, format="%.2f")
+HCT = st.number_input("HCT", value=None, format="%.2f")
+MCH = st.number_input("MCH", value=None, format="%.2f")
+MCHC = st.number_input("MCHC", value=None, format="%.2f")
+MCV = st.number_input("MCV", value=None, format="%.2f")
+RDW = st.number_input("RDW", value=None, format="%.2f")
+WBC = st.number_input("WBC", value=None, format="%.2f")
 
 # Radio button inputs with 'None' as default (no selection)
-inkordinasyon = st.radio("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"), key='inkordinasyon')
-ishal = st.radio("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"), key='ishal')
-istahsizlik = st.radio("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"), key='istahsizlik')
-kusma = st.radio("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"), key='kusma')
-solunum_guclugu = st.radio("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"), key='solunum_guclugu')
+inkordinasyon = st.radio("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+ishal = st.radio("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+istahsizlik = st.radio("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+kusma = st.radio("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+solunum_guclugu = st.radio("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 # Prediction button and validation check
 if st.button("Tahmin Et"):
@@ -70,7 +40,7 @@ if st.button("Tahmin Et"):
     }
     categorical_inputs = {
         "Tür": tur, "İnkordinasyon": inkordinasyon, "İshal": ishal,
-        "İştahsızlık": istahsızlık, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
+        "İştahsızlık": istahsizlik, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
     }
 
     # Check for missing numeric values
@@ -86,12 +56,8 @@ if st.button("Tahmin Et"):
             st.warning(f"Lütfen {', '.join(missing_categorical_values)} seçeneklerini seçiniz.")
     else:
         # Prepare data for model prediction
-        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsızlık, kusma, solunum_guclugu]]
+        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsizlik, kusma, solunum_guclugu]]
         prediction = model.predict(data)[0]
 
         # Display the prediction result
         st.write(f"Tahmin Sonucu: {prediction}")
-
-# Clear button
-if st.button("Temizle"):
-    clear_inputs()
