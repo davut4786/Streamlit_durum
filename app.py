@@ -12,19 +12,14 @@ st.title("Hastalık Durumu Tahmin Uygulaması")
 
 # Function to clear all inputs
 def clear_inputs():
-    # Anahtarların var olup olmadığını kontrol edin ve varsayılan değerler atayın
-    for key, default_value in [
-        ("tur", 0),  # 'Kedi' olarak ayarlanacak
-        ("GRAN", None), ("GRAN_A", None), ("LYM", None), ("LYM_A", None),
-        ("MON", None), ("HCT", None), ("MCH", None), ("MCHC", None),
-        ("MCV", None), ("RDW", None), ("WBC", None),
-        ("inkordinasyon", None), ("ishal", None), ("istahsizlik", None),
-        ("kusma", None), ("solunum_guclugu", None)
+    # Reset all session state values for input fields
+    for key in [
+        "tur", "GRAN", "GRAN_A", "LYM", "LYM_A", "MON",
+        "HCT", "MCH", "MCHC", "MCV", "RDW", "WBC",
+        "inkordinasyon", "ishal", "istahsizlik", "kusma", "solunum_guclugu"
     ]:
-        if key not in st.session_state:
-            st.session_state[key] = default_value
-        else:
-            st.session_state[key] = default_value
+        if key in st.session_state:
+            del st.session_state[key]  # Remove the key from session state
 
 # Input fields for user data
 tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key='tur')
