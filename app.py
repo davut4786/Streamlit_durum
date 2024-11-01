@@ -12,23 +12,19 @@ st.title("Hastalık Durumu Tahmin Uygulaması")
 
 # Function to clear all inputs
 def clear_inputs():
-    st.session_state["tur"] = 0  # 'Kedi' olarak ayarlanacak
-    st.session_state["GRAN"] = None
-    st.session_state["GRAN_A"] = None
-    st.session_state["LYM"] = None
-    st.session_state["LYM_A"] = None
-    st.session_state["MON"] = None
-    st.session_state["HCT"] = None
-    st.session_state["MCH"] = None
-    st.session_state["MCHC"] = None
-    st.session_state["MCV"] = None
-    st.session_state["RDW"] = None
-    st.session_state["WBC"] = None
-    st.session_state["inkordinasyon"] = None
-    st.session_state["ishal"] = None
-    st.session_state["istahsizlik"] = None
-    st.session_state["kusma"] = None
-    st.session_state["solunum_guclugu"] = None
+    # Anahtarların var olup olmadığını kontrol edin ve varsayılan değerler atayın
+    for key, default_value in [
+        ("tur", 0),  # 'Kedi' olarak ayarlanacak
+        ("GRAN", None), ("GRAN_A", None), ("LYM", None), ("LYM_A", None),
+        ("MON", None), ("HCT", None), ("MCH", None), ("MCHC", None),
+        ("MCV", None), ("RDW", None), ("WBC", None),
+        ("inkordinasyon", None), ("ishal", None), ("istahsizlik", None),
+        ("kusma", None), ("solunum_guclugu", None)
+    ]:
+        if key not in st.session_state:
+            st.session_state[key] = default_value
+        else:
+            st.session_state[key] = default_value
 
 # Input fields for user data
 tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi", key='tur')
