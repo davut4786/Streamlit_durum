@@ -8,7 +8,7 @@ with open(model_path, "rb") as file:
     model = pickle.load(file)
 
 # Streamlit title
-st.title("Hastalık Tahmin Uygulaması")
+st.title("Hastalık Durumu Tahmin Uygulaması")
 
 # Input fields for user data
 tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "1 (seçili)" if x == 1 else "0 (seçili)")
