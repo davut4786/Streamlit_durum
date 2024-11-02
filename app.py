@@ -10,6 +10,32 @@ with open(model_path, "rb") as file:
 # Streamlit başlığı ortalı
 st.markdown("<h1 style='text-align: center;'>Hastalık Durumu Tahmin Uygulaması</h1>", unsafe_allow_html=True)
 
+# Center the buttons
+st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+
+# "Temizle" button to reset the form
+if st.button("Temizle"):
+    # Reset all form values to None
+    st.session_state.tur = None
+    st.session_state.inkordinasyon = None
+    st.session_state.ishal = None
+    st.session_state.istahsızlık = None
+    st.session_state.kusma = None
+    st.session_state.solunum_guclugu = None
+    st.session_state.GRAN = None
+    st.session_state.GRAN_A = None
+    st.session_state.LYM = None
+    st.session_state.LYM_A = None
+    st.session_state.MON = None
+    st.session_state.HCT = None
+    st.session_state.MCH = None
+    st.session_state.MCHC = None
+    st.session_state.MCV = None
+    st.session_state.RDW = None
+    st.session_state.WBC = None
+
+st.markdown("</div>", unsafe_allow_html=True)
+
 # Categorical inputs section
 st.markdown("**Anamnez Bilgileri**")
 cat_col1, cat_col2, cat_col3 = st.columns(3)
@@ -53,99 +79,39 @@ with num_col4:
 with num_col5:
     WBC = st.number_input("WBC", value=None, format="%.2f", key="WBC")
 
-# Centered prediction and clear buttons
-button_col1, button_col2 = st.columns([1, 1])
-with button_col1:
-    if st.button("Tahmin Et", key="predict"):
-        # Validate input fields for empty values
-        numeric_inputs = {
-            "GRAN": st.session_state.GRAN, "GRAN_A": st.session_state.GRAN_A, "LYM": st.session_state.LYM, 
-            "LYM_A": st.session_state.LYM_A, "MON": st.session_state.MON, "HCT": st.session_state.HCT, 
-            "MCH": st.session_state.MCH, "MCHC": st.session_state.MCHC, "MCV": st.session_state.MCV, 
-            "RDW": st.session_state.RDW, "WBC": st.session_state.WBC
-        }
-        categorical_inputs = {
-            "Tür": st.session_state.tur, "İnkordinasyon": st.session_state.inkordinasyon, "İshal": st.session_state.ishal,
-            "İştahsızlık": st.session_state.istahsızlık, "Kusma": st.session_state.kusma, "Solunum Güçlüğü": st.session_state.solunum_guclugu
-        }
+# Centered prediction button
+if st.button("Tahmin Et", key="predict"):
+    # Validate input fields for empty values
+    numeric_inputs = {
+        "GRAN": st.session_state.GRAN, "GRAN_A": st.session_state.GRAN_A, "LYM": st.session_state.LYM, 
+        "LYM_A": st.session_state.LYM_A, "MON": st.session_state.MON, "HCT": st.session_state.HCT, 
+        "MCH": st.session_state.MCH, "MCHC": st.session_state.MCHC, "MCV": st.session_state.MCV, 
+        "RDW": st.session_state.RDW, "WBC": st.session_state.WBC
+    }
+    categorical_inputs = {
+        "Tür": st.session_state.tur, "İnkordinasyon": st.session_state.inkordinasyon, "İshal": st.session_state.ishal,
+        "İştahsızlık": st.session_state.istahsızlık, "Kusma": st.session_state.kusma, "Solunum Güçlüğü": st.session_state.solunum_guclugu
+    }
 
-        # Check for missing numeric values
-        missing_numeric_values = [name for name, value in numeric_inputs.items() if value is None]
-        # Check for missing categorical selections
-        missing_categorical_values = [name for name, value in categorical_inputs.items() if value is None]
+    # Check for missing numeric values
+    missing_numeric_values = [name for name, value in numeric_inputs.items() if value is None]
+    # Check for missing categorical selections
+    missing_categorical_values = [name for name, value in categorical_inputs.items() if value is None]
 
-        # Display warnings for missing values
-        if missing_numeric_values or missing_categorical_values:
-            if missing_numeric_values:
-                st.warning(f"Lütfen {', '.join(missing_numeric_values)} değerlerini doldurunuz.")
-            if missing_categorical_values:
-                st.warning(f"Lütfen {', '.join(missing_categorical_values)} seçeneklerini seçiniz.")
-        else:
-            # Prepare data for model prediction
-            data = [[st.session_state.tur, st.session_state.GRAN, st.session_state.GRAN_A, st.session_state.LYM, 
-                     st.session_state.LYM_A, st.session_state.MON, st.session_state.HCT, st.session_state.MCH, 
-                     st.session_state.MCHC, st.session_state.MCV, st.session_state.RDW, st.session_state.WBC, 
-                     st.session_state.inkordinasyon, st.session_state.ishal, st.session_state.istahsızlık, 
-                     st.session_state.kusma, st.session_state.solunum_guclugu]]
-            prediction = model.predict(data)[0]
+    # Display warnings for missing values
+    if missing_numeric_values or missing_categorical_values:
+        if missing_numeric_values:
+            st.warning(f"Lütfen {', '.join(missing_numeric_values)} değerlerini doldurunuz.")
+        if missing_categorical_values:
+            st.warning(f"Lütfen {', '.join(missing_categorical_values)} seçeneklerini seçiniz.")
+    else:
+        # Prepare data for model prediction
+        data = [[st.session_state.tur, st.session_state.GRAN, st.session_state.GRAN_A, st.session_state.LYM, 
+                 st.session_state.LYM_A, st.session_state.MON, st.session_state.HCT, st.session_state.MCH, 
+                 st.session_state.MCHC, st.session_state.MCV, st.session_state.RDW, st.session_state.WBC, 
+                 st.session_state.inkordinasyon, st.session_state.ishal, st.session_state.istahsızlık, 
+                 st.session_state.kusma, st.session_state.solunum_guclugu]]
+        prediction = model.predict(data)[0]
 
-            # Display the prediction result centered
-            st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
-
-with button_col2:
-    # "Temizle" button to reset the form
-    if st.button("Temizle"):
-        # Reset all form values to None
-        st.session_state.tur = None
-        st.session_state.inkordinasyon = None
-        st.session_state.ishal = None
-        st.session_state.istahsızlık = None
-        st.session_state.kusma = None
-        st.session_state.solunum_guclugu = None
-        st.session_state.GRAN = None
-        st.session_state.GRAN_A = None
-        st.session_state.LYM = None
-        st.session_state.LYM_A = None
-        st.session_state.MON = None
-        st.session_state.HCT = None
-        st.session_state.MCH = None
-        st.session_state.MCHC = None
-        st.session_state.MCV = None
-        st.session_state.RDW = None
-        st.session_state.WBC = None
-
-# Default values for session states to show "Seçiniz" on first load
-if 'tur' not in st.session_state:
-    st.session_state.tur = None
-if 'inkordinasyon' not in st.session_state:
-    st.session_state.inkordinasyon = None
-if 'ishal' not in st.session_state:
-    st.session_state.ishal = None
-if 'istahsızlık' not in st.session_state:
-    st.session_state.istahsızlık = None
-if 'kusma' not in st.session_state:
-    st.session_state.kusma = None
-if 'solunum_guclugu' not in st.session_state:
-    st.session_state.solunum_guclugu = None
-if 'GRAN' not in st.session_state:
-    st.session_state.GRAN = None
-if 'GRAN_A' not in st.session_state:
-    st.session_state.GRAN_A = None
-if 'LYM' not in st.session_state:
-    st.session_state.LYM = None
-if 'LYM_A' not in st.session_state:
-    st.session_state.LYM_A = None
-if 'MON' not in st.session_state:
-    st.session_state.MON = None
-if 'HCT' not in st.session_state:
-    st.session_state.HCT = None
-if 'MCH' not in st.session_state:
-    st.session_state.MCH = None
-if 'MCHC' not in st.session_state:
-    st.session_state.MCHC = None
-if 'MCV' not in st.session_state:
-    st.session_state.MCV = None
-if 'RDW' not in st.session_state:
-    st.session_state.RDW = None
-if 'WBC' not in st.session_state:
-    st.session_state.WBC = None
+        # Display the prediction result centered
+        st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
