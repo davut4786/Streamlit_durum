@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# Model loading (rf_model.pkl file path)
+# Load model
 model_path = "rf_model.pkl"
 with open(model_path, "rb") as file:
     model = pickle.load(file)
@@ -10,36 +10,43 @@ with open(model_path, "rb") as file:
 # Streamlit title
 st.title("Hastalık Durumu Tahmin Uygulaması")
 
-# Input fields for user data
-tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 
-# Arrange inputs in rows of four with spacing using st.columns
-col1, col2, col3, col4 = st.columns(4, gap="large")
+col1, col2, col3, col4 = st.columns(4)
 with col1:
-    GRAN = st.number_input("GRAN", value=None, format="%.2f", step=None)
-    HCT = st.number_input("HCT", value=None, format="%.2f", step=None)
-    MCV = st.number_input("MCV", value=None, format="%.2f", step=None)
-
+    GRAN = st.number_input("GRAN", format="%.2f")
+    MCH = st.number_input("MCH", format="%.2f")
+    RDW = st.number_input("RDW", format="%.2f")
 with col2:
-    GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f", step=None)
-    MCH = st.number_input("MCH", value=None, format="%.2f", step=None)
-    RDW = st.number_input("RDW", value=None, format="%.2f", step=None)
-
+    GRAN_A = st.number_input("GRAN_A", format="%.2f")
+    LYM = st.number_input("LYM", format="%.2f")
+    MCHC = st.number_input("MCHC", format="%.2f")
+    WBC = st.number_input("WBC", format="%.2f")
 with col3:
-    LYM = st.number_input("LYM", value=None, format="%.2f", step=None)
-    MCHC = st.number_input("MCHC", value=None, format="%.2f", step=None)
-    WBC = st.number_input("WBC", value=None, format="%.2f", step=None)
-
+    LYM_A = st.number_input("LYM_A", format="%.2f")
+    MON = st.number_input("MON", format="%.2f")
+    MCV = st.number_input("MCV", format="%.2f")
+    HCT = st.number_input("HCT", format="%.2f")
 with col4:
-    LYM_A = st.number_input("LYM_A", value=None, format="%.2f", step=None)
-    MON = st.number_input("MON", value=None, format="%.2f", step=None)
+    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 
-# Dropdown inputs with 'None' as default (no selection)
-inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x is 1 else "Hayır"))
-istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x is 1 else "Hayır"))
-kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x is 1 else "Hayır"))
-solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x is 1 else "Hayır"))
+# Add extra space between sections
+st.markdown("<br>", unsafe_allow_html=True)
+
+
+cat_col1, cat_col2, cat_col3, cat_col4 = st.columns(4)
+with cat_col1:
+    inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+with cat_col2:
+    ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+with cat_col3:
+    istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+with cat_col4:
+    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+
+# Second row for categorical inputs
+cat_col1, cat_col2 = st.columns([1, 3])  # Add empty space in layout
+with cat_col1:
+    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 # Prediction button and validation check
 if st.button("Tahmin Et"):
