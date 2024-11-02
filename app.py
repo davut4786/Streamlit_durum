@@ -10,43 +10,50 @@ with open(model_path, "rb") as file:
 # Streamlit title
 st.title("Hastalık Durumu Tahmin Uygulaması")
 
-
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    GRAN = st.number_input("GRAN", format="%.2f")
-    MCH = st.number_input("MCH", format="%.2f")
-    RDW = st.number_input("RDW", format="%.2f")
-with col2:
-    GRAN_A = st.number_input("GRAN_A", format="%.2f")
-    LYM = st.number_input("LYM", format="%.2f")
-    MCHC = st.number_input("MCHC", format="%.2f")
-    WBC = st.number_input("WBC", format="%.2f")
-with col3:
-    LYM_A = st.number_input("LYM_A", format="%.2f")
-    MON = st.number_input("MON", format="%.2f")
-    MCV = st.number_input("MCV", format="%.2f")
-    HCT = st.number_input("HCT", format="%.2f")
-with col4:
-    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
-
-# Add extra space between sections
-st.markdown("<br>", unsafe_allow_html=True)
-
-
-cat_col1, cat_col2, cat_col3, cat_col4 = st.columns(4)
+# Section for categorical inputs (3 per row)
+st.markdown("**Anamnez Bilgileri**")
+cat_col1, cat_col2, cat_col3 = st.columns(3)
 with cat_col1:
     inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 with cat_col2:
     ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 with cat_col3:
     istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+
+# Second row of categorical inputs
+cat_col4, cat_col5, cat_col6 = st.columns(3)
 with cat_col4:
     kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+with cat_col5:
+    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+with cat_col6:
+    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 
-# Second row for categorical inputs
-cat_col1, cat_col2 = st.columns([1, 3])  # Add empty space in layout
-with cat_col1:
-    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+# Add extra space between sections
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# Section for numeric inputs (3 per row)
+st.markdown("**Hemogram Değerleri**")
+num_col1, num_col2, num_col3 = st.columns(3)
+with num_col1:
+    GRAN = st.number_input("GRAN", format="%.2f")
+    LYM = st.number_input("LYM", format="%.2f")
+    MCH = st.number_input("MCH", format="%.2f")
+with num_col2:
+    GRAN_A = st.number_input("GRAN_A", format="%.2f")
+    LYM_A = st.number_input("LYM_A", format="%.2f")
+    MCHC = st.number_input("MCHC", format="%.2f")
+with num_col3:
+    MON = st.number_input("MON", format="%.2f")
+    HCT = st.number_input("HCT", format="%.2f")
+    MCV = st.number_input("MCV", format="%.2f")
+
+# Another row for remaining numeric inputs
+num_col4, num_col5, num_col6 = st.columns(3)
+with num_col4:
+    RDW = st.number_input("RDW", format="%.2f")
+with num_col5:
+    WBC = st.number_input("WBC", format="%.2f")
 
 # Prediction button and validation check
 if st.button("Tahmin Et"):
