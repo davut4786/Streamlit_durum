@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# CSS to center-align the title, style the button, and set input box width
+# CSS to center-align the title and style the button
 st.markdown("""
     <style>
         .title {
@@ -18,16 +18,8 @@ st.markdown("""
         .stRadio label {
             font-weight: bold;
         }
-        /* Adjusting width for number input and select boxes */
-        .stNumberInput > div, .stSelectbox > div {
-            max-width: 400px; /* Set desired width */
-        }
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"] {
-            -webkit-appearance: none;
-            -moz-appearance: textfield;
-            margin: 0;
+        .stNumberInput, .stSelectbox {
+            margin-right: 10px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -41,33 +33,33 @@ with open(model_path, "rb") as file:
     model = pickle.load(file)
 
 # Input fields for user data
-tur = st.selectbox("**Tür**", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
+tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 
 # Arrange inputs in rows of four with spacing using st.columns
 col1, col2, col3, col4 = st.columns(4, gap="large")
 with col1:
-    GRAN = st.number_input("**GRAN**", value=None, format="%.2f", step=None)
-    HCT = st.number_input("**HCT**", value=None, format="%.2f", step=None)
-    MCV = st.number_input("**MCV**", value=None, format="%.2f", step=None)
-    inkordinasyon = st.selectbox("**İnkordinasyon**", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    GRAN = st.number_input("GRAN", value=None, format="%.2f")
+    HCT = st.number_input("HCT", value=None, format="%.2f")
+    MCV = st.number_input("MCV", value=None, format="%.2f")
+    inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 with col2:
-    GRAN_A = st.number_input("**GRAN_A**", value=None, format="%.2f", step=None)
-    MCH = st.number_input("**MCH**", value=None, format="%.2f", step=None)
-    RDW = st.number_input("**RDW**", value=None, format="%.2f", step=None)
-    ishal = st.selectbox("**İshal**", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f")
+    MCH = st.number_input("MCH", value=None, format="%.2f")
+    RDW = st.number_input("RDW", value=None, format="%.2f")
+    ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 with col3:
-    LYM = st.number_input("**LYM**", value=None, format="%.2f", step=None)
-    MCHC = st.number_input("**MCHC**", value=None, format="%.2f", step=None)
-    WBC = st.number_input("**WBC**", value=None, format="%.2f", step=None)
-    istahsizlik = st.selectbox("**İştahsızlık**", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x is 1 else "Yok"))
+    LYM = st.number_input("LYM", value=None, format="%.2f")
+    MCHC = st.number_input("MCHC", value=None, format="%.2f")
+    WBC = st.number_input("WBC", value=None, format="%.2f")
+    istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 with col4:
-    LYM_A = st.number_input("**LYM_A**", value=None, format="%.2f", step=None)
-    MON = st.number_input("**MON**", value=None, format="%.2f", step=None)
-    kusma = st.selectbox("**Kusma**", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x is 1 else "Hayır"))
-    solunum_guclugu = st.selectbox("**Solunum Güçlüğü**", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x is 1 else "Yok"))
+    LYM_A = st.number_input("LYM_A", value=None, format="%.2f")
+    MON = st.number_input("MON", value=None, format="%.2f")
+    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 # Prediction button and validation check
 button_clicked = st.markdown('<div class="button"><button>Tahmin Et</button></div>', unsafe_allow_html=True)
