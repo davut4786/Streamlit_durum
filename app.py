@@ -10,6 +10,32 @@ with open(model_path, "rb") as file:
 # Streamlit başlığı ortalı
 st.markdown("<h1 style='text-align: center;'>Hastalık Durumu Tahmin Uygulaması</h1>", unsafe_allow_html=True)
 
+# Center the buttons
+st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+
+# "Temizle" button to reset the form
+if st.button("Temizle"):
+    # Reset all form values to None
+    st.session_state.tur = None
+    st.session_state.inkordinasyon = None
+    st.session_state.ishal = None
+    st.session_state.istahsızlık = None
+    st.session_state.kusma = None
+    st.session_state.solunum_guclugu = None
+    st.session_state.GRAN = None
+    st.session_state.GRAN_A = None
+    st.session_state.LYM = None
+    st.session_state.LYM_A = None
+    st.session_state.MON = None
+    st.session_state.HCT = None
+    st.session_state.MCH = None
+    st.session_state.MCHC = None
+    st.session_state.MCV = None
+    st.session_state.RDW = None
+    st.session_state.WBC = None
+
+st.markdown("</div>", unsafe_allow_html=True)
+
 # Categorical inputs section
 st.markdown("**Anamnez Bilgileri**")
 cat_col1, cat_col2, cat_col3 = st.columns(3)
@@ -89,14 +115,3 @@ if st.button("Tahmin Et", key="predict"):
 
         # Display the prediction result centered
         st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
-
-# Center the buttons
-st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-
-# "Temizle" button to reset the form
-if st.button("Temizle"):
-    # Use session state to reset the form values
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-
-st.markdown("</div>", unsafe_allow_html=True)
