@@ -2,19 +2,41 @@ import streamlit as st
 import pickle
 import pandas as pd
 
+# CSS to center-align the title and style the button
+st.markdown("""
+    <style>
+        .title {
+            text-align: center;
+        }
+        .button {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            font-size: 20px;
+            padding: 10px 24px;
+        }
+        .stRadio label {
+            font-weight: bold;
+        }
+        .stNumberInput, .stSelectbox {
+            margin-right: 10px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Streamlit title with center alignment
+st.markdown('<h1 class="title">Hastalık Durumu Tahmin Uygulaması</h1>', unsafe_allow_html=True)
+
 # Model loading (rf_model.pkl file path)
 model_path = "rf_model.pkl"
 with open(model_path, "rb") as file:
     model = pickle.load(file)
 
-# Streamlit title
-st.title("Hastalık Durumu Tahmin Uygulaması")
-
 # Input fields for user data
 tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 
-# Arrange inputs in rows of four using st.columns
-col1, col2, col3, col4 = st.columns(4)
+# Arrange inputs in rows of four with spacing using st.columns
+col1, col2, col3, col4 = st.columns(4, gap="large")
 with col1:
     GRAN = st.number_input("GRAN", value=None, format="%.2f")
     HCT = st.number_input("HCT", value=None, format="%.2f")
@@ -40,7 +62,9 @@ with col4:
     solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 # Prediction button and validation check
-if st.button("Tahmin Et"):
+button_clicked = st.markdown('<div class="button"><button>Tahmin Et</button></div>', unsafe_allow_html=True)
+
+if button_clicked:
     # Validate input fields for empty values
     numeric_inputs = {
         "GRAN": GRAN, "GRAN_A": GRAN_A, "LYM": LYM, "LYM_A": LYM_A, "MON": MON,
