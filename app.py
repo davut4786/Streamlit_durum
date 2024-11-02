@@ -14,7 +14,7 @@ st.markdown("<h1 style='text-align: center;'>Hastalık Durumu Tahmin Uygulaması
 st.markdown("**Anamnez Bilgileri**")
 cat_col1, cat_col2, cat_col3 = st.columns(3)
 with cat_col1:
-    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
+    tur = st.selectbox("Tür", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Köpek" if x == 1 else "Kedi"))
 with cat_col2:
     inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 with cat_col3:
@@ -36,24 +36,24 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("**Hemogram Değerleri**")
 num_col1, num_col2, num_col3 = st.columns(3)
 with num_col1:
-    GRAN = st.number_input("GRAN", format="%.2f")
-    LYM = st.number_input("LYM", format="%.2f")
-    MCH = st.number_input("MCH", format="%.2f")
+    GRAN = st.number_input("GRAN", value=None, format="%.2f")
+    LYM = st.number_input("LYM", value=None, format="%.2f")
+    MCH = st.number_input("MCH", value=None, format="%.2f")
 with num_col2:
-    GRAN_A = st.number_input("GRAN_A", format="%.2f")
-    LYM_A = st.number_input("LYM_A", format="%.2f")
-    MCHC = st.number_input("MCHC", format="%.2f")
+    GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f")
+    LYM_A = st.number_input("LYM_A", value=None, format="%.2f")
+    MCHC = st.number_input("MCHC", value=None, format="%.2f")
 with num_col3:
-    MON = st.number_input("MON", format="%.2f")
-    HCT = st.number_input("HCT", format="%.2f")
-    MCV = st.number_input("MCV", format="%.2f")
+    MON = st.number_input("MON", value=None, format="%.2f")
+    HCT = st.number_input("HCT", value=None, format="%.2f")
+    MCV = st.number_input("MCV", value=None, format="%.2f")
 
 # Another row for remaining numeric inputs
 num_col4, num_col5, num_col6 = st.columns(3)
 with num_col4:
-    RDW = st.number_input("RDW", format="%.2f")
+    RDW = st.number_input("RDW", value=None, format="%.2f")
 with num_col5:
-    WBC = st.number_input("WBC", format="%.2f")
+    WBC = st.number_input("WBC", value=None, format="%.2f")
 
 # Centered prediction button
 st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
