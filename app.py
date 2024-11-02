@@ -86,4 +86,7 @@ if st.button("Tahmin Et"):
 
         # Display the prediction result centered
         st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
+
+# Close the centered div
 st.markdown("</div>", unsafe_allow_html=True)
+
