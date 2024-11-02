@@ -11,7 +11,7 @@ with open(model_path, "rb") as file:
 st.title("Hastalık Durumu Tahmin Uygulaması")
 
 # Input fields for user data
-tur = st.radio("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
+tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 GRAN = st.number_input("GRAN", value=None, format="%.2f")
 GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f")
 LYM = st.number_input("LYM", value=None, format="%.2f")
@@ -24,12 +24,12 @@ MCV = st.number_input("MCV", value=None, format="%.2f")
 RDW = st.number_input("RDW", value=None, format="%.2f")
 WBC = st.number_input("WBC", value=None, format="%.2f")
 
-# Radio button inputs with 'None' as default (no selection)
-inkordinasyon = st.radio("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-ishal = st.radio("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-istahsizlik = st.radio("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-kusma = st.radio("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-solunum_guclugu = st.radio("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+# Dropdown inputs with 'None' as default (no selection)
+inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 # Prediction button and validation check
 if st.button("Tahmin Et"):
