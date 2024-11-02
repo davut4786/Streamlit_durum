@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# Load model
+# Model loading (rf_model.pkl file path)
 model_path = "rf_model.pkl"
 with open(model_path, "rb") as file:
     model = pickle.load(file)
@@ -10,40 +10,26 @@ with open(model_path, "rb") as file:
 # Streamlit title
 st.title("Hastalık Durumu Tahmin Uygulaması")
 
-# Columns for numeric inputs (4 per row)
-st.subheader("Numeric Inputs")
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
-    GRAN = st.number_input("GRAN", format="%.2f")
-    MCH = st.number_input("MCH", format="%.2f")
-    RDW = st.number_input("RDW", format="%.2f")
-with col2:
-    GRAN_A = st.number_input("GRAN_A", format="%.2f")
-    LYM = st.number_input("LYM", format="%.2f")
-    MCHC = st.number_input("MCHC", format="%.2f")
-    WBC = st.number_input("WBC", format="%.2f")
-with col3:
-    LYM_A = st.number_input("LYM_A", format="%.2f")
-    MON = st.number_input("MON", format="%.2f")
-    MCV = st.number_input("MCV", format="%.2f")
-    HCT = st.number_input("HCT", format="%.2f")
+# Input fields for user data
+tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
+GRAN = st.number_input("GRAN", value=None, format="%.2f")
+GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f")
+LYM = st.number_input("LYM", value=None, format="%.2f")
+LYM_A = st.number_input("LYM_A", value=None, format="%.2f")
+MON = st.number_input("MON", value=None, format="%.2f")
+HCT = st.number_input("HCT", value=None, format="%.2f")
+MCH = st.number_input("MCH", value=None, format="%.2f")
+MCHC = st.number_input("MCHC", value=None, format="%.2f")
+MCV = st.number_input("MCV", value=None, format="%.2f")
+RDW = st.number_input("RDW", value=None, format="%.2f")
+WBC = st.number_input("WBC", value=None, format="%.2f")
 
-# Columns for categorical inputs (4 per row)
-st.subheader("Categorical Inputs")
-cat_col1, cat_col2, cat_col3, cat_col4 = st.columns(4)
-with cat_col1:
-    inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-with cat_col2:
-    ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-with cat_col3:
-    istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-with cat_col4:
-    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
-
-# Additional categorical field for alignment
-with cat_col1:
-    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+# Dropdown inputs with 'None' as default (no selection)
+inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
 
 # Prediction button and validation check
 if st.button("Tahmin Et"):
