@@ -56,6 +56,37 @@ with num_col5:
     WBC = st.number_input("WBC", value=None, format="%.2f")
 
 # Centered prediction button
+if st.button("Tahmin Et", key="predict"):
+    # Validate input fields for empty values
+    numeric_inputs = {
+        "GRAN": GRAN, "GRAN_A": GRAN_A, "LYM": LYM, "LYM_A": LYM_A, "MON": MON,
+        "HCT": HCT, "MCH": MCH, "MCHC": MCHC, "MCV": MCV, "RDW": RDW, "WBC": WBC
+    }
+    categorical_inputs = {
+        "Tür": tur, "İnkordinasyon": inkordinasyon, "İshal": ishal,
+        "İştahsızlık": istahsızlık, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
+    }
+
+    # Check for missing numeric values
+    missing_numeric_values = [name for name, value in numeric_inputs.items() if value is None]
+    # Check for missing categorical selections
+    missing_categorical_values = [name for name, value in categorical_inputs.items() if value is None]
+
+    # Display warnings for missing values
+    if missing_numeric_values or missing_categorical_values:
+        if missing_numeric_values:
+            st.warning(f"Lütfen {', '.join(missing_numeric_values)} değerlerini doldurunuz.")
+        if missing_categorical_values:
+            st.warning(f"Lütfen {', '.join(missing_categorical_values)} seçeneklerini seçiniz.")
+    else:
+        # Prepare data for model prediction
+        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsızlık, kusma, solunum_guclugu]]
+        prediction = model.predict(data)[0]
+
+        # Display the prediction result centered
+        st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
+
+# Center the button
 st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
 if st.button("Tahmin Et"):
     # Validate input fields for empty values
@@ -86,7 +117,4 @@ if st.button("Tahmin Et"):
 
         # Display the prediction result centered
         st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
-
-# Close the centered div
 st.markdown("</div>", unsafe_allow_html=True)
-
