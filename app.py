@@ -139,3 +139,13 @@ if 'MON' not in st.session_state:
     st.session_state.MON = None
 if 'HCT' not in st.session_state:
     st.session_state.HCT = None
+if 'MCH' not in st.session_state:
+    st.session_state.MCH = None
+if 'MCHC' not in st.session_state:
+    st.session_state.MCHC = None
+if 'MCV' not in st.session_state:
+    st.session_state.MCV = None
+if 'RDW' not in st.session_state:
+    st.session_state.RDW = None
+if 'WBC' not in st.session_state:
+    st.session_state.WBC = None
