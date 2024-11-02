@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# CSS to center-align the title and style the button
+# CSS to center-align the title, style the button, and frame each input section
 st.markdown("""
     <style>
         .title {
@@ -28,6 +28,15 @@ st.markdown("""
             -moz-appearance: textfield;
             margin: 0;
         }
+        .input-frame {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .input-frame label {
+            font-weight: bold;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -42,34 +51,78 @@ with open(model_path, "rb") as file:
 # Input fields for user data
 tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 
-# Arrange inputs in rows of four with spacing using st.columns
+# Arrange inputs in rows of four with spacing using st.columns and frame each input
 col1, col2, col3, col4 = st.columns(4, gap="large")
 with col1:
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     GRAN = st.number_input("GRAN", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     HCT = st.number_input("HCT", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     MCV = st.number_input("MCV", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     GRAN_A = st.number_input("GRAN_A", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     MCH = st.number_input("MCH", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     RDW = st.number_input("RDW", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with col3:
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     LYM = st.number_input("LYM", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     MCHC = st.number_input("MCHC", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     WBC = st.number_input("WBC", value=None, format="%.2f", step=None)
-    istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x is 1 else "Yok"))
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
+    istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with col4:
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     LYM_A = st.number_input("LYM_A", value=None, format="%.2f", step=None)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
     MON = st.number_input("MON", value=None, format="%.2f", step=None)
-    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x is 1 else "Hayır"))
-    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x is 1 else "Yok"))
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
+    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Evet" if x == 1 else "Hayır"))
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="input-frame">', unsafe_allow_html=True)
+    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Prediction button and validation check
-button_clicked = st.markdown('<div class="button"><button>Tahmin Et</button></div>', unsafe_allow_html=True)
+button_clicked = st.button("Tahmin Et", key="predict_button")
 
 if button_clicked:
     # Validate input fields for empty values
