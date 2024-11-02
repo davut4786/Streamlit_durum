@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# CSS to center-align the title and style the button
+# CSS to center-align the title, style the button, and set input box width
 st.markdown("""
     <style>
         .title {
@@ -18,8 +18,9 @@ st.markdown("""
         .stRadio label {
             font-weight: bold;
         }
-        .stNumberInput, .stSelectbox {
-            margin-right: 10px;
+        /* Adjusting width for number input and select boxes */
+        .stNumberInput > div, .stSelectbox > div {
+            max-width: 400px; /* Set desired width */
         }
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button,
