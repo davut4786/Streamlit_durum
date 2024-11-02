@@ -7,27 +7,27 @@ model_path = "rf_model.pkl"
 with open(model_path, "rb") as file:
     model = pickle.load(file)
 
-# Streamlit title
-st.title("Hastalık Durumu Tahmin Uygulaması")
+# Streamlit title centered
+st.markdown("<h1 style='text-align: center;'>Hastalık Durumu Tahmin Uygulaması</h1>", unsafe_allow_html=True)
 
 # Section for categorical inputs (3 per row)
 st.markdown("**Anamnez Bilgileri**")
 cat_col1, cat_col2, cat_col3 = st.columns(3)
 with cat_col1:
-    inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
 with cat_col2:
-    ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    inkordinasyon = st.selectbox("İnkordinasyon", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 with cat_col3:
-    istahsizlik = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    ishal = st.selectbox("İshal", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 
 # Second row of categorical inputs
 cat_col4, cat_col5, cat_col6 = st.columns(3)
 with cat_col4:
-    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    istahsızlık = st.selectbox("İştahsızlık", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 with cat_col5:
-    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
+    kusma = st.selectbox("Kusma", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 with cat_col6:
-    tur = st.selectbox("Tür", options=[1, 0], format_func=lambda x: "Köpek" if x == 1 else "Kedi")
+    solunum_guclugu = st.selectbox("Solunum Güçlüğü", options=[None, 1, 0], format_func=lambda x: "Seçiniz" if x is None else ("Var" if x == 1 else "Yok"))
 
 # Add extra space between sections
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -55,7 +55,8 @@ with num_col4:
 with num_col5:
     WBC = st.number_input("WBC", format="%.2f")
 
-# Prediction button and validation check
+# Centered prediction button
+st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
 if st.button("Tahmin Et"):
     # Validate input fields for empty values
     numeric_inputs = {
@@ -64,7 +65,7 @@ if st.button("Tahmin Et"):
     }
     categorical_inputs = {
         "Tür": tur, "İnkordinasyon": inkordinasyon, "İshal": ishal,
-        "İştahsızlık": istahsizlik, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
+        "İştahsızlık": istahsızlık, "Kusma": kusma, "Solunum Güçlüğü": solunum_guclugu
     }
 
     # Check for missing numeric values
@@ -80,8 +81,9 @@ if st.button("Tahmin Et"):
             st.warning(f"Lütfen {', '.join(missing_categorical_values)} seçeneklerini seçiniz.")
     else:
         # Prepare data for model prediction
-        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsizlik, kusma, solunum_guclugu]]
+        data = [[tur, GRAN, GRAN_A, LYM, LYM_A, MON, HCT, MCH, MCHC, MCV, RDW, WBC, inkordinasyon, ishal, istahsızlık, kusma, solunum_guclugu]]
         prediction = model.predict(data)[0]
 
-        # Display the prediction result
-        st.write(f"Tahmin Sonucu: {prediction}")
+        # Display the prediction result centered
+        st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
