@@ -113,5 +113,9 @@ if st.button("Tahmin Et", key="predict"):
                  st.session_state.kusma, st.session_state.solunum_guclugu]]
         prediction = model.predict(data)[0]
 
+        # Map prediction result to user-friendly labels
+        result_text = "HASTA" if prediction == 1 else "SAĞLIKLI"
+
         # Display the prediction result centered
-        st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(prediction), unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center;'>Tahmin Sonucu: {}</h2>".format(result_text), unsafe_allow_html=True)
+
