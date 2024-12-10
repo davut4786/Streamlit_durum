@@ -6,7 +6,22 @@ import pandas as pd
 model_path = "rf_model.pkl"
 with open(model_path, "rb") as file:
     model = pickle.load(file)
-
+    
+st.markdown("""
+    <style>
+        div[role="listbox"] {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        div[role="listbox"] > div:hover {
+            background-color: #cce5ff;
+            color: #000000;
+        }
+        div[data-baseweb="select"] {
+            color: #000000;
+        }
+    </style>
+""", unsafe_allow_html=True)
 # Streamlit başlığı ortalı
 st.markdown("<h1 style='text-align: center;'>Hastalık Durumu Tahmin Uygulaması</h1>", unsafe_allow_html=True)
 
